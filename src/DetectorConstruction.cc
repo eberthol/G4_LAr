@@ -30,7 +30,7 @@ G4VPhysicalVolume* DetectorConstruction::Construct()
   auto worldSolid
     = new G4Box("worldBox", fxWorld*0.5, fyWorld*0.5, fzWorld*0.5);
   auto worldLogical
-    = new G4LogicalVolume(worldSolid, fAir, "worldLogical");
+    = new G4LogicalVolume(worldSolid, fvacuum, "worldLogical");
   auto worldPhysical = new G4PVPlacement(
     nullptr, G4ThreeVector(), worldLogical, "worldPhysical", nullptr, false, 0, checkOverlaps);
 

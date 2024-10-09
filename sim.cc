@@ -1,6 +1,5 @@
 #include "DetectorConstruction.hh"
-// #include "ActionInitialization.hh"
-
+#include "ActionInitialization.hh"
 
 #include "G4UIExecutive.hh"
 #include "G4SteppingVerbose.hh"
@@ -44,9 +43,8 @@ int main(int argc,char** argv)
 
   runManager->SetUserInitialization(physicsList);
 
-
-//   // User action initialization
-//   runManager->SetUserInitialization(new ActionInitialization());
+  // User action initialization
+  runManager->SetUserInitialization(new ActionInitialization());
 
   // Visualization manager construction
   auto visManager = new G4VisExecutive;
