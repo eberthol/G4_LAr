@@ -23,7 +23,7 @@ void ActionInitialization::Build() const
   auto eventAction = new EventAction();
   SetUserAction(eventAction);
 
-  auto steppingAction = new SteppingAction();
+  auto steppingAction = new SteppingAction(eventAction);
   SetUserAction(steppingAction);
 
 }

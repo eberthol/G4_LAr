@@ -9,7 +9,7 @@
 
 class SteppingAction : public G4UserSteppingAction {
 public:
-    SteppingAction(); //EventAction* eventAction
+    SteppingAction(EventAction* eventAction); //EventAction* eventAction
     virtual ~SteppingAction();
 
     virtual void UserSteppingAction(const G4Step*) override;

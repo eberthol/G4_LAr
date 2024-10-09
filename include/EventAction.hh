@@ -21,10 +21,11 @@ public:
     void EndOfEventAction(const G4Event*) override;
 
     void AddScintillationPhoton();
-    
+    void AddEdep(G4double edep){ fEnergyDeposited +=edep; }
+
 private:
   G4int fScintillationPhotonCount;
-  G4double fTotalEnergyDeposited;
+  G4double fEnergyDeposited;
 
   
 };

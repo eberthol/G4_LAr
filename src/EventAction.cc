@@ -27,7 +27,7 @@ void EventAction::BeginOfEventAction(const G4Event*)
 {
   auto analysisManager = G4AnalysisManager::Instance();
   fScintillationPhotonCount = 0;  // Reset photon count at start of each event
-  fTotalEnergyDeposited = 0;
+  fEnergyDeposited = 0;
 }
 
 void EventAction::EndOfEventAction(const G4Event* event)
@@ -43,9 +43,9 @@ void EventAction::EndOfEventAction(const G4Event* event)
     << " monentum " << primary->GetMomentum() << G4endl;
 
   // Output the total number of scintillation photons at the end of each event
-    G4cout << "Total scintillation photons in this event: " 
+    G4cout << "EventAction: Total scintillation photons in this event: " 
            << fScintillationPhotonCount << G4endl;
-    G4cout << "Total Energy Deposited: " << fTotalEnergyDeposited / MeV << " MeV" << G4endl;
+    G4cout << "EventAction: Total Energy Deposited in the event: " << fEnergyDeposited / MeV << " MeV" << G4endl;
 
   int numVertices = event->GetNumberOfPrimaryVertex();
   for (int i = 0; i < numVertices; ++i) {
@@ -54,7 +54,7 @@ void EventAction::EndOfEventAction(const G4Event* event)
       for (int j = 0; j < vertex->GetNumberOfParticle(); ++j) {
           G4PrimaryParticle* particle = vertex->GetPrimary(j);
         //   partCount += vertex->GetNumberOfParticle();
-          G4cout << "Particles in the event: " << particle->GetPDGcode() << G4endl;
+          G4cout << "EventAction: Particles in the event: " << particle->GetPDGcode() << G4endl;
         //   if (particle->GetPDGcode() == 22) { // PDG code for photons (gammas)
         //       gammaCount++;
         //   }

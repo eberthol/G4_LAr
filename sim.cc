@@ -1,5 +1,6 @@
 #include "DetectorConstruction.hh"
 #include "ActionInitialization.hh"
+// #include "PhysicsList.hh"
 
 #include "G4UIExecutive.hh"
 #include "G4SteppingVerbose.hh"
@@ -7,11 +8,7 @@
 #include "G4VisExecutive.hh"
 #include "G4UImanager.hh"
 
-
 #include "FTFP_BERT.hh"
-#include "QGSP_BERT.hh"
-
-
 #include "G4EmStandardPhysics_option4.hh"
 // #include "G4StepLimiterPhysics.hh"
 // #include "G4OpticalParameters.hh"
@@ -37,11 +34,14 @@ int main(int argc,char** argv)
   // Mandatory user initialization classes
   runManager->SetUserInitialization(new DetectorConstruction);
 
+  // runManager->SetUserInitialization(new PhysicsList);
+
   auto physicsList = new FTFP_BERT;
   // auto physicsList = new QGSP_BERT;
   physicsList->ReplacePhysics(new G4EmStandardPhysics_option4());
-
   runManager->SetUserInitialization(physicsList);
+
+
 
   // User action initialization
   runManager->SetUserInitialization(new ActionInitialization());
