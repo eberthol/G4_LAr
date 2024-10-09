@@ -10,30 +10,7 @@
 #include "G4PVPlacement.hh"
 #include "G4NistManager.hh"
 #include "G4Material.hh"
-
-// #include "G4TransportationManager.hh"
-// #include "G4Mag_UsualEqRhs.hh"
-
-// 
-// #include "G4Element.hh"
-// #include "G4MaterialTable.hh"
-
-// #include "G4VSolid.hh"
-// #include "G4Tubs.hh"
-
-// #include "G4PVParameterised.hh"
-// #include "G4PVReplica.hh"
-// #include "G4UserLimits.hh"
-
-// #include "G4SDManager.hh"
-// #include "G4VSensitiveDetector.hh"
-// #include "G4RunManager.hh"
-// #include "G4GenericMessenger.hh"
-
-// #include "G4VisAttributes.hh"
-// #include "G4Colour.hh"
-
-// #include "G4ios.hh"
+#include "G4Sphere.hh"
 #include "G4SystemOfUnits.hh"
 
 
@@ -56,6 +33,30 @@ G4VPhysicalVolume* DetectorConstruction::Construct()
     = new G4LogicalVolume(worldSolid, fAir, "worldLogical");
   auto worldPhysical = new G4PVPlacement(
     nullptr, G4ThreeVector(), worldLogical, "worldPhysical", nullptr, false, 0, checkOverlaps);
+
+  // Define a solid sphere filled with LAr with a radius of 11 cm
+  G4double innerRadius = 0.*cm;       // Inner radius (0 for a solid sphere)
+  G4double outerRadius = 11.*cm;      // Outer radius
+  G4double startPhi = 0.*deg;         // Start angle in phi
+  G4double deltaPhi = 360.*deg;       // Full coverage in phi
+  G4double startTheta = 0.*deg;       // Start angle in theta
+  G4double deltaTheta = 180.*deg;     // Full coverage in theta (for a complete sphere)
+  G4Sphere* LArSphereSolid = new G4Sphere("LArSphere", innerRadius, outerRadius, 
+                                         startPhi, deltaPhi, 
+                                         startTheta, deltaTheta);
+
+    // Logical volume: The material and shape of the volume
+    G4LogicalVolume* LArSphereLogical = new G4LogicalVolume(LArSphereSolid, fLAr, "LArSphereLogical");
+
+    // Placement of the sphere in the world (at the origin in this case)
+    G4VPhysicalVolume* LArSpherePhysical = new G4PVPlacement(0,                    // No rotation
+                                                      G4ThreeVector(0,0,0), // At (0, 0, 0)
+                                                      LArSphereLogical,          // Logical volume
+                                                      "LArSpherePhysical",         // Name
+                                                      worldLogical,           // Mother volume (assume it's already defined)
+                                                      false,                // No boolean operation
+                                                      0,                    // Copy number
+                                                      true);                // Check for overlaps
 
   return worldPhysical;
 }
