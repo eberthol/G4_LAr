@@ -16,12 +16,12 @@ SteppingAction::~SteppingAction() {}
 void SteppingAction::UserSteppingAction(const G4Step* step) {
     G4Track* track = step->GetTrack();
 
-    G4cout << "UserSteppingAction: step " << track->GetCurrentStepNumber() << ": " << G4endl
-               << track->GetDefinition()->GetParticleName() << " Interaction in  "
-               << track->GetVolume()->GetName() << G4endl
-               << "            TrackID : " << track->GetTrackID() << G4endl
-               << "            Energy of the track : " << track->GetKineticEnergy() / MeV << " MeV, " << G4endl
-               << "            Energy deposited: " << step->GetTotalEnergyDeposit() / MeV << " MeV" << G4endl;
+    // G4cout << "UserSteppingAction: step " << track->GetCurrentStepNumber() << ": " << G4endl
+    //            << track->GetDefinition()->GetParticleName() << " Interaction in  "
+    //            << track->GetVolume()->GetName() << G4endl
+    //            << "            TrackID : " << track->GetTrackID() << G4endl
+    //            << "            Energy of the track : " << track->GetKineticEnergy() / MeV << " MeV, " << G4endl
+    //            << "            Energy deposited: " << step->GetTotalEnergyDeposit() / MeV << " MeV" << G4endl;
 
 
     // Check if the particle is an optical photon (scintillation photon)

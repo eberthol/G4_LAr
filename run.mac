@@ -4,6 +4,6 @@
 #/run/numberOfThreads 4
 /run/initialize
 
-/run/beamOn 100
+#/run/beamOn 100
 
-# /run/beamOn 2
+/run/beamOn 1

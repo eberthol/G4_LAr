@@ -7,6 +7,7 @@
 // #include "G4Tubs.hh"
 // #include "G4LogicalVolume.hh"
 #include "G4SystemOfUnits.hh"
+#include "G4MaterialPropertiesTable.hh"
 
 #include <vector>
 
@@ -37,6 +38,8 @@ class DetectorConstruction : public G4VUserDetectorConstruction
     G4double fxWorld = 4. * m;
     G4double fyWorld = 3. * m;
     G4double fzWorld = 5. * m;
+
+    G4MaterialPropertiesTable* fLArMPT =  nullptr;
 
     G4Material* fLAr    =  nullptr;
     G4Material* fGAr    =  nullptr;

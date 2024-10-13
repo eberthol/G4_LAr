@@ -1,8 +1,5 @@
 
 #include "DetectorConstruction.hh"
-// #include "Constants.hh"
-// #include "PMTSD.hh"
-
 
 #include "G4VPhysicalVolume.hh"
 #include "G4Box.hh"
@@ -12,6 +9,7 @@
 #include "G4Material.hh"
 #include "G4Sphere.hh"
 #include "G4SystemOfUnits.hh"
+#include "G4MaterialPropertiesTable.hh"
 
 
 DetectorConstruction::DetectorConstruction()
@@ -36,7 +34,8 @@ G4VPhysicalVolume* DetectorConstruction::Construct()
 
   // Define a solid sphere filled with LAr with a radius of 11 cm
   G4double innerRadius = 0.*cm;       // Inner radius (0 for a solid sphere)
-  G4double outerRadius = 11.*cm;      // Outer radius
+  // G4double outerRadius = 11.*cm;      // Outer radius
+  G4double outerRadius = 50.*cm;      // Outer radius
   G4double startPhi = 0.*deg;         // Start angle in phi
   G4double deltaPhi = 360.*deg;       // Full coverage in phi
   G4double startTheta = 0.*deg;       // Start angle in theta
@@ -76,6 +75,29 @@ void DetectorConstruction::ConstructMaterials()
   // create a gas with very low density
   // use predefined database (eg. G4_Galactic)
   fvacuum = nistManager->FindOrBuildMaterial("G4_Galactic");
+
+  const G4int nEntries = 2;
+  G4double PhotonEnergy[nEntries] = {1.0*eV, 7.0*eV}; // dummy values
+  G4double LArRefractionIndex[nEntries] = {1.25, 1.25}; // dummy values
+  G4double LArAbsorptionLength[nEntries] = {50*cm, 50*cm}; // dummy values
+  G4double ScintEnergy[nEntries] = {3.26*eV, 3.44*eV}; // dummy values
+  G4double ScintFast[nEntries] = {1.0, 1.0}; // dummy values
+
+
+  fLArMPT = new G4MaterialPropertiesTable();
+  fLArMPT->AddProperty("RINDEX", PhotonEnergy, LArRefractionIndex, nEntries);
+  fLArMPT->AddProperty("ABSLENGTH", PhotonEnergy, LArAbsorptionLength, nEntries);
+
+  // fLArMPT->AddProperty("FASTCOMPONENT", ScintEnergy, LArAbsorptionLength, nEntries);
+
+  fLArMPT->AddConstProperty("SCINTILLATIONYIELD", 10. / MeV); // dummy value
+  // fLArMPT->AddConstProperty("SCINTILLATIONYIELD", 100. / keV); // dummy value
+  fLArMPT->AddConstProperty("RESOLUTIONSCALE", 1.0);  // Scaling factor for fluctuations
+  // fLArMPT->AddConstProperty("FASTTIMECONSTANT", 20.*ns);  // dummy value
+  // fLArMPT->AddConstProperty("YIELDRATIO", 1.);  // dummy value
+
+  fLAr->SetMaterialPropertiesTable(fLArMPT);
+
 
   G4cout << G4endl << "The materials defined are : " << G4endl << G4endl;
   G4cout << *(G4Material::GetMaterialTable()) << G4endl;
