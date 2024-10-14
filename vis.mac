@@ -34,8 +34,6 @@
 ## print track info (if many tracks it takes forever...)
 /tracking/verbose 0
 
-
-
 #
 # Draw hits at end of event:
 #/vis/scene/add/hits

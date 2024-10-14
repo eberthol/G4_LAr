@@ -57,29 +57,7 @@ int main(int argc,char** argv)
   physicsList->RegisterPhysics(opticalPhysics);
   runManager->SetUserInitialization(physicsList);
 
-
-
-
-  // G4Scintillation* scintillation = new G4Scintillation("Scintillation");
-  // opticalPhysics->SetScintillationYieldFactor(1.0);  //
-  // scintillation->SetTrackSecondariesFirst(true);  // Track the generated optical photons
-  // scintillation->SetScintillationYieldFactor(1.0); // Apply scintillation yield factor
-  // scintillation->SetScintillationByParticleType(true);  // Use particle-dependent scintillation
-  // Configure scintillation to use both fast and slow components, if applicable
-  // scintillation->SetTrackSecondariesFirst(true);  // Track optical photons
-    
-  // Enable scintillation by particle type, if desired (useful for different particles)
-  // scintillation->SetScintillationByParticleType(true);
-
-  // // Optionally, set whether scintillation should be fast or slow (single component)
-  // scintillation->SetScintillationYieldByParticleType(true);
-
-  // Add scintillation to optical physics
-  // opticalPhysics->AddProcess(scintillation);
-
   runManager->SetUserInitialization(physicsList);
-  
-  
     
 
   // User action initialization

@@ -76,31 +76,6 @@ void DetectorConstruction::ConstructMaterials()
   // use predefined database (eg. G4_Galactic)
   fvacuum = nistManager->FindOrBuildMaterial("G4_Galactic");
 
-  // const G4int nEntries = 2;
-  // G4double PhotonEnergy[nEntries] = {1.0*eV, 7.0*eV}; // dummy values
-  // G4double LArRefractionIndex[nEntries] = {1.25, 1.25}; // dummy values
-  // G4double LArAbsorptionLength[nEntries] = {50*cm, 50*cm}; // dummy values
-  // G4double ScintEnergy[nEntries] = {3.26*eV, 3.44*eV}; // dummy values
-  // G4double ScintFast[nEntries] = {1.0, 1.0}; // dummy values
-  // fLArMPT = new G4MaterialPropertiesTable();
-  // fLArMPT->AddProperty("RINDEX", PhotonEnergy, LArRefractionIndex, nEntries);
-  // fLArMPT->AddProperty("ABSLENGTH", PhotonEnergy, LArAbsorptionLength, nEntries);
-  // fLArMPT->AddConstProperty("SCINTILLATIONYIELD", 10. / MeV); // dummy value
-  // fLArMPT->AddConstProperty("RESOLUTIONSCALE", 1.0);  // Scaling factor for fluctuations
-  // fLAr->SetMaterialPropertiesTable(fLArMPT);
-
-  // const G4int nEntries = 1;
-  // const G4double scintillationYield = 50000.; // photons/MeV
-  // G4double photonEnergy[nEntries] = {9.7 * eV}; // 128 nm in eV
-  // G4double scintillationSpectrum[nEntries] = {scintillationYield}; // Yield at that energy
-  // G4double refractiveIndex[nEntries] = {1.34}; // Example refractive index
-  // G4double absorptionLength[nEntries] = {30 * cm}; // Absorption length at 128 nm
-  // fLArMPT = new G4MaterialPropertiesTable();
-  // fLArMPT->AddProperty("SCINTILLATION", photonEnergy, scintillationSpectrum, nEntries, true);
-  // fLArMPT->AddProperty("RINDEX", photonEnergy, refractiveIndex, nEntries);
-  // fLArMPT->AddProperty("ABSLENGTH", photonEnergy, absorptionLength, nEntries);
-  // fLAr->SetMaterialPropertiesTable(fLArMPT);
-
   const G4int nEntries = 2;
   G4double PhotonEnergy[nEntries] = {6.9*eV, 7.1*eV}; // dummy 
   G4double LArRefractionIndex[nEntries] = {1.49, 1.49}; // dummy 

@@ -17,6 +17,7 @@ public:
 private:
     EventAction* fEventAction;
     G4double fTotalEnergyDeposited; // Accumulated energy deposited in the event
+    G4double ftotalDistance;
 };
 
 #endif

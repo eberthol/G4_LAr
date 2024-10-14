@@ -13,7 +13,7 @@ PrimaryGeneratorAction::PrimaryGeneratorAction() {
     G4ParticleTable* particleTable = G4ParticleTable::GetParticleTable();
     G4ParticleDefinition* neutron = particleTable->FindParticle("neutron");
     fParticleGun->SetParticleDefinition(neutron);
-    fParticleGun->SetParticleEnergy(10.0 * MeV);  // Set the energy of the neutron
+    fParticleGun->SetParticleEnergy(2.45 * MeV);  // Set the energy of the neutron
     fParticleGun->SetParticlePosition(G4ThreeVector(0., 0., 0.)); // Set initial position
 }
 

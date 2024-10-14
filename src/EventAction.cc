@@ -27,7 +27,9 @@ void EventAction::BeginOfEventAction(const G4Event*)
 {
   auto analysisManager = G4AnalysisManager::Instance();
   fScintillationPhotonCount = 0;  // Reset photon count at start of each event
-  fEnergyDeposited = 0;
+  fEnergyDeposited = 0; 
+  fEnergyDepositedPrimary = 0;
+  fFlightDist = 0;  // neutron flight distance
 }
 
 void EventAction::EndOfEventAction(const G4Event* event)
@@ -36,16 +38,17 @@ void EventAction::EndOfEventAction(const G4Event* event)
   if ( printModulo == 0 || event->GetEventID() % printModulo != 0) return;
 
   auto primary = event->GetPrimaryVertex(0)->GetPrimary(0);
-  // G4cout
-  //   << G4endl
-  //   << ">>> Event " << event->GetEventID() << " >>> Simulation truth : "
-  //   << primary->GetG4code()->GetParticleName()
-  //   << " monentum " << primary->GetMomentum() << G4endl;
+  G4cout
+    << G4endl
+    << ">>> Event " << event->GetEventID() << " >>> Simulation truth : "
+    << primary->GetG4code()->GetParticleName()
+    << " monentum " << primary->GetMomentum() << G4endl;
 
-  // Output the total number of scintillation photons at the end of each event
-    // G4cout << "EventAction: Total scintillation photons in this event: " 
-    //        << fScintillationPhotonCount << G4endl;
-    // G4cout << "EventAction: Total Energy Deposited in the event: " << fEnergyDeposited / MeV << " MeV" << G4endl;
+  // Output: total number of scintillation photons at the end of each event
+    G4cout << "EventAction: Total scintillation photons in this event: " 
+           << fScintillationPhotonCount << G4endl;
+    G4cout << "EventAction: Total Energy Deposited in the event: " << fEnergyDeposited / MeV << " MeV" << G4endl;
+    G4cout << "EventAction: Total Energy Deposited by the primary particle: " << fEnergyDepositedPrimary / MeV << " MeV" << G4endl;
 
   // Count daughter particles in the event
   // reset count for each event
@@ -90,12 +93,32 @@ void EventAction::EndOfEventAction(const G4Event* event)
     analysisManager->FillNtupleIColumn(0, 12, photonCount); // number of (optical) photons
     analysisManager->FillNtupleIColumn(0, 13, fScintillationPhotonCount); // number of (scintillation) photons
     analysisManager->FillNtupleDColumn(0, 14, fEnergyDeposited); // Edep
+    analysisManager->FillNtupleDColumn(0, 15, fFlightDist);
+    // exiting neutron 4-momentum
+    analysisManager->FillNtupleDColumn(0, 16, fExitMomentum.x() / MeV); // px
+    analysisManager->FillNtupleDColumn(0, 17, fExitMomentum.y() / MeV); // py
+    analysisManager->FillNtupleDColumn(0, 18, fExitMomentum.z() / MeV); // pz
+    analysisManager->FillNtupleDColumn(0, 19, fExitEnergy / MeV);       // energy
+
+    analysisManager->FillNtupleDColumn(0, 20, fEnergyDepositedPrimary); // Edep primary particle
 
     analysisManager->AddNtupleRow(0);
 
 
 }
 
-void EventAction::AddScintillationPhoton() {
+void EventAction::AddScintillationPhoton() 
+{
     fScintillationPhotonCount++;
+}
+
+void EventAction::AddFlightDistance(G4double distance)
+{
+    fFlightDist += distance;
+}
+
+void EventAction::getExitFourMomentum(G4double E, G4ThreeVector p)
+{
+  fExitEnergy   = E;
+  fExitMomentum = p;
 }

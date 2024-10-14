@@ -35,8 +35,8 @@ class DetectorConstruction : public G4VUserDetectorConstruction
     void ConstructMaterials();
 
   private:
-    G4double fxWorld = 4. * m;
-    G4double fyWorld = 3. * m;
+    G4double fxWorld = 5. * m;
+    G4double fyWorld = 5. * m;
     G4double fzWorld = 5. * m;
 
     G4MaterialPropertiesTable* fLArMPT =  nullptr;

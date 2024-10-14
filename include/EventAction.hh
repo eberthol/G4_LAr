@@ -5,6 +5,7 @@
 
 #include "G4UserEventAction.hh"
 #include "globals.hh"
+#include "G4ThreeVector.hh"
 
 #include <vector>
 #include <array>
@@ -21,11 +22,19 @@ public:
     void EndOfEventAction(const G4Event*) override;
 
     void AddScintillationPhoton();
+    void AddFlightDistance(G4double distance);
     void AddEdep(G4double edep){ fEnergyDeposited +=edep; }
+    void AddEdepPrimary(G4double edep){ fEnergyDepositedPrimary +=edep; }
+
+    void getExitFourMomentum(G4double E, G4ThreeVector p);
 
 private:
   G4int fScintillationPhotonCount;
   G4double fEnergyDeposited;
+  G4double fEnergyDepositedPrimary;
+  G4double fFlightDist;
+  G4double fExitEnergy;
+  G4ThreeVector fExitMomentum;
 
   
 };

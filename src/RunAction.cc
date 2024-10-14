@@ -34,7 +34,18 @@ RunAction::RunAction()
   analysisManager->CreateNtupleIColumn("nGammas"); // number of gammas generated in an event
   analysisManager->CreateNtupleIColumn("nOptPhotons"); // number of photons generated in an event
   analysisManager->CreateNtupleIColumn("nScintPhotons"); // number of scintillation photons generated in an event
+  // more variabbles
   analysisManager->CreateNtupleDColumn("Edep"); // Energy deposited [MeV]
+  analysisManager->CreateNtupleDColumn("FlightDistance"); // Distance travelled by the neutron
+  // 4-momentum of the neutron when exiting the LAr sphere
+  analysisManager->CreateNtupleDColumn("neutronExit_px"); 
+  analysisManager->CreateNtupleDColumn("neutronExit_py"); 
+  analysisManager->CreateNtupleDColumn("neutronExit_pz"); 
+  analysisManager->CreateNtupleDColumn("neutronExit_E"); 
+
+  analysisManager->CreateNtupleDColumn("EdepPrimary"); // Energy deposited by the primary particle [MeV]
+
+
   analysisManager->FinishNtuple(0); 
 
 }
