@@ -11,8 +11,9 @@
 #include "FTFP_BERT.hh"
 #include "G4EmStandardPhysics_option4.hh"
 // #include "G4StepLimiterPhysics.hh"
-// #include "G4OpticalParameters.hh"
+#include "G4OpticalParameters.hh"
 #include "G4OpticalPhysics.hh"
+// #include "G4Scintillation.hh"
 
 
 int main(int argc,char** argv)
@@ -42,7 +43,40 @@ int main(int argc,char** argv)
   auto physicsList = new FTFP_BERT;
   // // auto physicsList = new QGSP_BERT;
   physicsList->ReplacePhysics(new G4EmStandardPhysics_option4());
-  physicsList->RegisterPhysics(new G4OpticalPhysics());
+  auto opticalPhysics = new G4OpticalPhysics();
+  auto opticalParams  = G4OpticalParameters::Instance();
+  physicsList->RegisterPhysics(opticalPhysics);
+
+  // Set scintillation process
+  // opticalParams->SetWLSTimeProfile("delta");
+  opticalParams->SetScintTrackSecondariesFirst(true); // controls whether the secondary particles (i.e., the scintillation photons) are tracked immediately after they are created. By enabling this option, Geant4 will prioritize tracking these photons before proceeding with the primary particle.
+  // opticalParams->SetCerenkovMaxPhotonsPerStep(100);
+  // opticalParams->SetCerenkovMaxBetaChange(10.0);
+  // opticalParams->SetCerenkovTrackSecondariesFirst(true);
+
+  physicsList->RegisterPhysics(opticalPhysics);
+  runManager->SetUserInitialization(physicsList);
+
+
+
+
+  // G4Scintillation* scintillation = new G4Scintillation("Scintillation");
+  // opticalPhysics->SetScintillationYieldFactor(1.0);  //
+  // scintillation->SetTrackSecondariesFirst(true);  // Track the generated optical photons
+  // scintillation->SetScintillationYieldFactor(1.0); // Apply scintillation yield factor
+  // scintillation->SetScintillationByParticleType(true);  // Use particle-dependent scintillation
+  // Configure scintillation to use both fast and slow components, if applicable
+  // scintillation->SetTrackSecondariesFirst(true);  // Track optical photons
+    
+  // Enable scintillation by particle type, if desired (useful for different particles)
+  // scintillation->SetScintillationByParticleType(true);
+
+  // // Optionally, set whether scintillation should be fast or slow (single component)
+  // scintillation->SetScintillationYieldByParticleType(true);
+
+  // Add scintillation to optical physics
+  // opticalPhysics->AddProcess(scintillation);
+
   runManager->SetUserInitialization(physicsList);
   
   

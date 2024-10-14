@@ -1,9 +1,10 @@
 # usage: ./sim run.mac
 # this disables the graphic output (faster)
 
-#/run/numberOfThreads 4
+# /run/numberOfThreads 4
 /run/initialize
 
 #/run/beamOn 100
+/run/beamOn 1000
 
-/run/beamOn 1
+#/run/beamOn 1
