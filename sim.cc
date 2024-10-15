@@ -49,10 +49,10 @@ int main(int argc,char** argv)
 
   // Set scintillation process
   // opticalParams->SetWLSTimeProfile("delta");
-  // opticalParams->SetScintTrackSecondariesFirst(true); // controls whether the secondary particles (i.e., the scintillation photons) are tracked immediately after they are created. By enabling this option, Geant4 will prioritize tracking these photons before proceeding with the primary particle.
+  opticalParams->SetScintTrackSecondariesFirst(true); // controls whether the secondary particles (i.e., the scintillation photons) are tracked immediately after they are created. By enabling this option, Geant4 will prioritize tracking these photons before proceeding with the primary particle.
   // opticalParams->SetCerenkovMaxPhotonsPerStep(100);
   // opticalParams->SetCerenkovMaxBetaChange(10.0);
-  // opticalParams->SetCerenkovTrackSecondariesFirst(true);
+  opticalParams->SetCerenkovTrackSecondariesFirst(true);
 
   physicsList->RegisterPhysics(opticalPhysics);
   runManager->SetUserInitialization(physicsList);

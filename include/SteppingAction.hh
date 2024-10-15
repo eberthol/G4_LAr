@@ -20,6 +20,7 @@ private:
     EventAction* fEventAction;
     G4double fTotalEnergyDeposited; // Accumulated energy deposited in the event
     G4double ftotalDistance;
+    // G4int fprocessCount; // attempt to count the number of processes in an event
 };
 
 #endif

@@ -17,6 +17,7 @@ SteppingAction::SteppingAction(EventAction* eventAction)
 {
     fEventAction = eventAction;
     ftotalDistance = 0.0;
+    // fprocessCount = 0;
 }
 
 SteppingAction::~SteppingAction() {}
@@ -47,6 +48,16 @@ void SteppingAction::UserSteppingAction(const G4Step* step) {
 
         G4cout << track->GetDefinition()->GetParticleName() << " flight distance "  << ftotalDistance / cm << " cm" << G4endl; 
 
+        // if (track->GetTrackID() == 1)
+        // {
+        //     const G4StepPoint* postStepPoint = step->GetPostStepPoint();
+        //     const G4VProcess* process = postStepPoint->GetProcessDefinedStep();
+        //     if (process) {
+        //         // Increment process count for primary particle
+        //         fprocessCount++;
+        //     }
+        // }
+
         if (preStepPoint->GetPhysicalVolume()->GetName() == "LArSpherePhysical" && 
             postStepPoint->GetPhysicalVolume()->GetName() != "LArSpherePhysical") {
             // Get the 4-momentum at the exit point
@@ -66,6 +77,17 @@ void SteppingAction::UserSteppingAction(const G4Step* step) {
     {
         // Increment photon count in EventAction
         fEventAction->AddScintillationPhoton();
+
+        // get the wavelength
+        G4double photonEnergy = track->GetKineticEnergy();  // in MeV
+        G4double photonEnergy_eV = photonEnergy * 1.0e6; // Convert MeV to eV
+        G4double h = 4.1357e-15;  // Planck's constant in eV·s
+        G4double c = 2.998e8;     // Speed of light in m/s
+        G4double wavelength = (h * c) / photonEnergy_eV;  // Wavelength in meters
+        // Convert wavelength to nanometers (nm)
+        G4double wavelengthInNM = wavelength * 1.0e9;
+        G4cout << "Photon wavelength: " << wavelengthInNM << " nm" << G4endl;
+
     }
 
 
@@ -81,24 +103,26 @@ void SteppingAction::UserSteppingAction(const G4Step* step) {
             {
                 const G4Track* secondaryTrack = (*secondaries)[i];
 
-                // // Get secondary particle name
-                // G4String particleName = secondaryTrack->GetDefinition()->GetParticleName();
+                // Get secondary particle name
+                G4String particleName = secondaryTrack->GetDefinition()->GetParticleName();
 
                 // Get the vertex of the secondary particle
-                G4ThreeVector secondaryVertex = secondaryTrack->GetVertexPosition();
+                // G4ThreeVector secondaryVertex = secondaryTrack->GetVertexPosition(); // not always initialized correctly for secondary particles
+                G4ThreeVector secondaryCreationPosition = secondaryTrack->GetPosition();
                 fEventAction->AddSecondaryVertex();
-                // G4double vertexTime = secondaryTrack->GetGlobalTime();
+                G4double vertexTime = secondaryTrack->GetGlobalTime();
                 
-
-                // // Get the process that created the secondary particle
-                // const G4VProcess* process = secondaryTrack->GetCreatorProcess();
-                // G4String processName = (process) ? process->GetProcessName() : "unknown";
+                // Get the process that created the secondary particle
+                const G4VProcess* process = secondaryTrack->GetCreatorProcess(); // process that created the particle
+                G4String processName = (process) ? process->GetProcessName() : "unknown";
 
                 // // Print the information
-                // G4cout << "Secondary particle: " << particleName << G4endl;
-                // G4cout << "   Created by process: " << processName << G4endl;
-                // G4cout << "   Vertex position: " << secondaryVertex << G4endl;
-                // G4cout << "   Global time of creation: " << vertexTime / ns << " ns" << G4endl;
+                G4cout << "Secondary particle: " << particleName << G4endl;
+                G4cout << "   Created by process: " << processName << G4endl;
+                G4cout << "   Vertex position: " << secondaryCreationPosition << G4endl;
+                G4cout << "   Energy: " << secondaryTrack->GetTotalEnergy() << G4endl;
+                G4cout << "   3-momentum: " << secondaryTrack->GetMomentum() << G4endl;
+                G4cout << "   Global time of creation: " << vertexTime / ns << " ns" << G4endl;
             }
         } 
 
@@ -113,17 +137,16 @@ void SteppingAction::PrintInfo(const G4Step* step)
     {
         G4cout << G4endl
             << "UserSteppingAction: step " << track->GetCurrentStepNumber() << ": " << G4endl
+            << "          Track" << track->GetTrackID() << ": "
             << track->GetDefinition()->GetParticleName() << " interaction in "
             << track->GetVolume()->GetName()
-            << ", process: "  << step->GetPostStepPoint()->GetProcessDefinedStep()->GetProcessName() << G4endl
-            << "            TrackID : " << track->GetTrackID() << G4endl
-            << "            Energy of the track : " << track->GetKineticEnergy() / MeV << " MeV, "
-            << "            Energy deposited: " << step->GetTotalEnergyDeposit() / MeV << " MeV" << G4endl;
+            << ", process that created the step: "  << step->GetPostStepPoint()->GetProcessDefinedStep()->GetProcessName()
+            << ", ParentID : " << track->GetParentID() << G4endl
+            << "          Kinetic energy of the track : " << track->GetKineticEnergy() / MeV << " MeV, "
+            << "          Energy deposited: " << step->GetTotalEnergyDeposit() / MeV << " MeV" << G4endl
+            << "          Energy: " << track->GetTotalEnergy() / MeV << " MeV" << G4endl
+            << "          Momentum: " << track->GetMomentum() / MeV << " MeV" << G4endl;
 
-        if (track->GetTrackID() == 1)
-        {
-            
-        }
 
     }
 

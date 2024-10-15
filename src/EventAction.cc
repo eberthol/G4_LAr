@@ -43,7 +43,7 @@ void EventAction::EndOfEventAction(const G4Event* event)
     << G4endl
     << ">>> Event " << event->GetEventID() << " >>> Simulation truth : "
     << primary->GetG4code()->GetParticleName()
-    << " monentum " << primary->GetMomentum() << G4endl;
+    << " momentum " << primary->GetMomentum() << G4endl;
 
   // Output: total number of scintillation photons at the end of each event
     G4cout << "EventAction: Total scintillation photons in this event: " << fScintillationPhotonCount << G4endl;
