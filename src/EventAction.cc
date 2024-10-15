@@ -30,6 +30,7 @@ void EventAction::BeginOfEventAction(const G4Event*)
   fEnergyDeposited = 0; 
   fEnergyDepositedPrimary = 0;
   fFlightDist = 0;  // neutron flight distance
+  fSecondaryVertexCount = 0; 
 }
 
 void EventAction::EndOfEventAction(const G4Event* event)
@@ -45,10 +46,11 @@ void EventAction::EndOfEventAction(const G4Event* event)
     << " monentum " << primary->GetMomentum() << G4endl;
 
   // Output: total number of scintillation photons at the end of each event
-    G4cout << "EventAction: Total scintillation photons in this event: " 
-           << fScintillationPhotonCount << G4endl;
+    G4cout << "EventAction: Total scintillation photons in this event: " << fScintillationPhotonCount << G4endl;
     G4cout << "EventAction: Total Energy Deposited in the event: " << fEnergyDeposited / MeV << " MeV" << G4endl;
     G4cout << "EventAction: Total Energy Deposited by the primary particle: " << fEnergyDepositedPrimary / MeV << " MeV" << G4endl;
+    G4cout << "Number of secondary vertices: " << fSecondaryVertexCount << G4endl;
+    
 
   // Count daughter particles in the event
   // reset count for each event
@@ -73,10 +75,7 @@ void EventAction::EndOfEventAction(const G4Event* event)
   }
 
 
-
-
-
-// //   Get analysis manager
+//   Get analysis manager
     auto analysisManager = G4AnalysisManager::Instance();
     analysisManager->FillNtupleIColumn(0, 0, event->GetEventID());
     analysisManager->FillNtupleIColumn(0, 1, primary->GetPDGcode());
@@ -110,6 +109,11 @@ void EventAction::EndOfEventAction(const G4Event* event)
 void EventAction::AddScintillationPhoton() 
 {
     fScintillationPhotonCount++;
+}
+
+void EventAction::AddSecondaryVertex() 
+{
+    fSecondaryVertexCount++;
 }
 
 void EventAction::AddFlightDistance(G4double distance)

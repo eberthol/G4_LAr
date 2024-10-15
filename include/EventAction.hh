@@ -22,6 +22,7 @@ public:
     void EndOfEventAction(const G4Event*) override;
 
     void AddScintillationPhoton();
+    void AddSecondaryVertex(); 
     void AddFlightDistance(G4double distance);
     void AddEdep(G4double edep){ fEnergyDeposited +=edep; }
     void AddEdepPrimary(G4double edep){ fEnergyDepositedPrimary +=edep; }
@@ -30,6 +31,7 @@ public:
 
 private:
   G4int fScintillationPhotonCount;
+  G4int fSecondaryVertexCount;
   G4double fEnergyDeposited;
   G4double fEnergyDepositedPrimary;
   G4double fFlightDist;

@@ -1,3 +1,5 @@
+#include "Constants.hh"
+
 #include "PrimaryGeneratorAction.hh"
 #include "G4ParticleGun.hh"
 #include "G4Event.hh"
@@ -13,8 +15,9 @@ PrimaryGeneratorAction::PrimaryGeneratorAction() {
     G4ParticleTable* particleTable = G4ParticleTable::GetParticleTable();
     G4ParticleDefinition* neutron = particleTable->FindParticle("neutron");
     fParticleGun->SetParticleDefinition(neutron);
-    fParticleGun->SetParticleEnergy(1.0 * MeV);  // Set the energy of the neutron
-    fParticleGun->SetParticlePosition(G4ThreeVector(0., 0., 0.)); // Set initial position
+    fParticleGun->SetParticleEnergy(kEnergy);  // Set the energy of the neutron
+    fParticleGun->SetParticlePosition(G4ThreeVector(kGunPositionX, kGunPositionY, kGunPositionZ)); // Set initial position
+    fParticleGun->SetParticleMomentumDirection(G4ThreeVector(kDirectionX, kDirectionY, kDirectionZ));
 }
 
 PrimaryGeneratorAction::~PrimaryGeneratorAction() {

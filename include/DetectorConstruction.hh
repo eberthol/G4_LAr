@@ -1,11 +1,10 @@
 #ifndef DetectorConstruction_h
 #define DetectorConstruction_h 1
 
+#include "Constants.hh"
+
 #include "globals.hh"
 #include "G4VUserDetectorConstruction.hh"
-// #include "G4Box.hh"
-// #include "G4Tubs.hh"
-// #include "G4LogicalVolume.hh"
 #include "G4SystemOfUnits.hh"
 #include "G4MaterialPropertiesTable.hh"
 
@@ -13,15 +12,6 @@
 
 
 class G4Material;
-
-
-
-// class G4VPhysicalVolume;
-// 
-// class G4VSensitiveDetector;
-// class G4LogicalVolume;
-// class G4GenericMessenger;
-// class G4MaterialPropertiesTable;
 
 /// Detector construction
 
@@ -35,9 +25,9 @@ class DetectorConstruction : public G4VUserDetectorConstruction
     void ConstructMaterials();
 
   private:
-    G4double fxWorld = 5. * m;
-    G4double fyWorld = 5. * m;
-    G4double fzWorld = 5. * m;
+    G4double fxWorld = kxWorld;
+    G4double fyWorld = kyWorld;
+    G4double fzWorld = kzWorld;
 
     G4MaterialPropertiesTable* fLArMPT =  nullptr;
 

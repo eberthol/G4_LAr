@@ -69,38 +69,40 @@ void SteppingAction::UserSteppingAction(const G4Step* step) {
     }
 
 
-    // // Get the secondary particles created in this step
-    // const std::vector<const G4Track*>* secondaries = step->GetSecondaryInCurrentStep();
-    // if (secondaries->size() > 0) 
-    // {
-    //     G4cout << "Secondary particles produced in this step: " << secondaries->size() << G4endl;
-    //     if (secondaries->size() <= 10)
-    //     {
-    //         // Loop over all secondary particles
-    //         for (size_t i = 0; i < secondaries->size(); ++i) 
-    //         {
-    //             const G4Track* secondaryTrack = (*secondaries)[i];
+    // Get the secondary particles created in this step
+    const std::vector<const G4Track*>* secondaries = step->GetSecondaryInCurrentStep();
+    if (secondaries->size() > 0) 
+    {
+        G4cout << "Secondary particles produced in this step: " << secondaries->size() << G4endl;
+        if (secondaries->size() <= 10)
+        {
+            // Loop over all secondary particles
+            for (size_t i = 0; i < secondaries->size(); ++i) 
+            {
+                const G4Track* secondaryTrack = (*secondaries)[i];
 
-    //             // Get secondary particle name
-    //             G4String particleName = secondaryTrack->GetDefinition()->GetParticleName();
+                // // Get secondary particle name
+                // G4String particleName = secondaryTrack->GetDefinition()->GetParticleName();
 
-    //             // Get the vertex of the secondary particle
-    //             G4ThreeVector secondaryVertex = secondaryTrack->GetVertexPosition();
-    //             G4double vertexTime = secondaryTrack->GetGlobalTime();
+                // Get the vertex of the secondary particle
+                G4ThreeVector secondaryVertex = secondaryTrack->GetVertexPosition();
+                fEventAction->AddSecondaryVertex();
+                // G4double vertexTime = secondaryTrack->GetGlobalTime();
+                
 
-    //             // Get the process that created the secondary particle
-    //             const G4VProcess* process = secondaryTrack->GetCreatorProcess();
-    //             G4String processName = (process) ? process->GetProcessName() : "unknown";
+                // // Get the process that created the secondary particle
+                // const G4VProcess* process = secondaryTrack->GetCreatorProcess();
+                // G4String processName = (process) ? process->GetProcessName() : "unknown";
 
-    //             // Print the information
-    //             G4cout << "Secondary particle: " << particleName << G4endl;
-    //             G4cout << "   Created by process: " << processName << G4endl;
-    //             G4cout << "   Vertex position: " << secondaryVertex << G4endl;
-    //             G4cout << "   Global time of creation: " << vertexTime / ns << " ns" << G4endl;
-    //         }
-    //     } 
+                // // Print the information
+                // G4cout << "Secondary particle: " << particleName << G4endl;
+                // G4cout << "   Created by process: " << processName << G4endl;
+                // G4cout << "   Vertex position: " << secondaryVertex << G4endl;
+                // G4cout << "   Global time of creation: " << vertexTime / ns << " ns" << G4endl;
+            }
+        } 
 
-    // }
+    }
 
 }
 
