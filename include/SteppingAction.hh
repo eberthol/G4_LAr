@@ -14,6 +14,8 @@ public:
 
     virtual void UserSteppingAction(const G4Step*) override;
 
+    void PrintInfo(const G4Step* step); // to print out stuff 
+
 private:
     EventAction* fEventAction;
     G4double fTotalEnergyDeposited; // Accumulated energy deposited in the event

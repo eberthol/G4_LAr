@@ -1,5 +1,9 @@
 {
     "files.associations": {
-        "*.icc": "cpp"
+        "*.icc": "cpp",
+        "__tree": "cpp",
+        "fstream": "cpp",
+        "list": "cpp",
+        "regex": "cpp"
     }
 }

@@ -113,23 +113,3 @@ void DetectorConstruction::ConstructMaterials()
 //     FASTTIMECONSTANT: Decay time for the fast component (e.g., prompt scintillation).
 //     SLOWTIMECONSTANT: Decay time for the slow component (e.g., delayed scintillation).
 //     YIELDRATIO: The fraction of scintillation light in the fast component compared to the total yield.
-
-// // Create the material properties table
-// G4MaterialPropertiesTable* MPT_LAr = new G4MaterialPropertiesTable();
-
-// // Define the emission spectrum for the fast component (SCINTILLATIONCOMPONENT1)
-// G4double photonEnergy[] = {3.5*eV, 4.5*eV}; // Example range for photon energy
-// G4double scintComponent1[] = {1.0, 0.0};    // Define relative intensity over energy range
-// MPT_LAr->AddProperty("SCINTILLATIONCOMPONENT1", photonEnergy, scintComponent1, 2);
-
-// // Define the emission spectrum for the slow component (SCINTILLATIONCOMPONENT2)
-// G4double scintComponent2[] = {0.5, 1.0};    // Define relative intensity over energy range
-// MPT_LAr->AddProperty("SCINTILLATIONCOMPONENT2", photonEnergy, scintComponent2, 2);
-
-// // Set other scintillation properties (e.g., yield ratio, decay time)
-// MPT_LAr->AddConstProperty("YIELDRATIO", 0.8);    // Ratio of fast to slow component
-// MPT_LAr->AddConstProperty("FASTTIMECONSTANT", 6.0*ns);
-// MPT_LAr->AddConstProperty("SLOWTIMECONSTANT", 1500.0*ns);
-
-// // Assign the material properties table to the material
-// LAr->SetMaterialPropertiesTable(MPT_LAr);
