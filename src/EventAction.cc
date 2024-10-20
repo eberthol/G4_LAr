@@ -14,7 +14,6 @@
 // #include "G4PrimaryVertex.hh"
 // #include "G4UserEventAction.hh"
 
-
 using std::array;
 using std::vector;
 
@@ -103,6 +102,18 @@ void EventAction::EndOfEventAction(const G4Event* event)
 
     analysisManager->AddNtupleRow(0);
 
+  
+    // TH1D* hWavelength = new TH1D("hWavelength", "Wavelength of Optical Photons; Wavelength (nm); Counts", 100, 100, 200); // 100 bins from 100 nm to 200 nm
+    // const std::vector<G4double>& wavelengths = fSteppingAction->GetWavelengths();
+    // // Fill the histogram
+    //   for (G4double wavelength : wavelengths) {
+    //       hWavelength->Fill(wavelength);
+    //   }
+
+    //   // Draw the histogram (you may want to save it or analyze further)
+    //   TCanvas* c = new TCanvas("c", "Wavelength Histogram", 800, 600);
+    //   hWavelength->Draw();
+    //   c->SaveAs("wavelength_histogram.png"); // Save the histogram as an image
 
 }
 

@@ -28,9 +28,9 @@ constexpr G4double kDirectionZ = 1.0;
 constexpr G4double kFastTimeConstant = 6.0*ns;    // Fast scintillation decay time
 constexpr G4double kSlowTimeConstant = 1500.0*ns; // Slow scintillation decay time
 constexpr G4double kYieldRatio = 0.8; // 80% fast component, 20% slow component
-constexpr G4double kScintYield = 1./MeV; // dummy 
+constexpr G4double kScintYield = 10./MeV; // dummy 
 
-const std::vector<G4double> kPhotonEnergy = {6.9*eV, 7.1*eV}; // dummy 
+const std::vector<G4double> kPhotonEnergy = {9.69*eV, 9.69*eV}; // dummy   128nm -> 9.69eV
 const std::vector<G4double> kLArRefractionIndex = {1.49, 1.49}; // dummy 
 const std::vector<G4double> kLArAbsorptionLength = {200.*cm, 200.*cm}; // dummy
 const std::vector<G4double> kScintComponent1 = {1.0, 1.0}; // Fast component (normalized to 1)

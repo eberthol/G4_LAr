@@ -48,6 +48,12 @@ RunAction::RunAction()
 
   analysisManager->FinishNtuple(0); 
 
+  /*
+        Here we define our histograms
+  */
+ // Create a histogram for wavelengths
+  analysisManager->CreateH1("Wavelength", "Wavelength of Optical Photons; Wavelength (nm); Counts", 100, 100, 200);
+
 }
 
 
@@ -72,6 +78,7 @@ void RunAction::EndOfRunAction(const G4Run* /*run*/)
   auto analysisManager = G4AnalysisManager::Instance();
   analysisManager->Write();
   analysisManager->CloseFile();
+  
 
 }
 

@@ -5,7 +5,8 @@
 #include "G4SystemOfUnits.hh"
 #include "G4VProcess.hh"
 #include "G4Neutron.hh"
-// #include "G4AnalysisManager.hh"
+#include "G4PhysicalConstants.hh"  // For physical constants like h_Planck, c_light
+#include "G4AnalysisManager.hh"
 
 // Redirect cout to /dev/null, i.e. don't print out stuff in the terminal
 // #include <iostream>
@@ -48,15 +49,6 @@ void SteppingAction::UserSteppingAction(const G4Step* step) {
 
         G4cout << track->GetDefinition()->GetParticleName() << " flight distance "  << ftotalDistance / cm << " cm" << G4endl; 
 
-        // if (track->GetTrackID() == 1)
-        // {
-        //     const G4StepPoint* postStepPoint = step->GetPostStepPoint();
-        //     const G4VProcess* process = postStepPoint->GetProcessDefinedStep();
-        //     if (process) {
-        //         // Increment process count for primary particle
-        //         fprocessCount++;
-        //     }
-        // }
 
         if (preStepPoint->GetPhysicalVolume()->GetName() == "LArSpherePhysical" && 
             postStepPoint->GetPhysicalVolume()->GetName() != "LArSpherePhysical") {
@@ -80,13 +72,12 @@ void SteppingAction::UserSteppingAction(const G4Step* step) {
 
         // get the wavelength
         G4double photonEnergy = track->GetKineticEnergy();  // in MeV
-        G4double photonEnergy_eV = photonEnergy * 1.0e6; // Convert MeV to eV
-        G4double h = 4.1357e-15;  // Planck's constant in eV·s
-        G4double c = 2.998e8;     // Speed of light in m/s
-        G4double wavelength = (h * c) / photonEnergy_eV;  // Wavelength in meters
-        // Convert wavelength to nanometers (nm)
-        G4double wavelengthInNM = wavelength * 1.0e9;
-        G4cout << "Photon wavelength: " << wavelengthInNM << " nm" << G4endl;
+        G4double wavelength = (h_Planck * c_light) / photonEnergy;  // Wavelength in mm
+
+        // Fill the histogram with the wavelength
+        G4AnalysisManager::Instance()->FillH1(0, wavelength / nm); // Fill histogram with the wavelength
+
+        G4cout << "Optiical photon wavelength: " << wavelength / nm << " nm" << G4endl;
 
     }
 
