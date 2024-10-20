@@ -8,8 +8,8 @@
 
 void ActionInitialization::BuildForMaster() const
 {
-//   auto runAction = new RunAction;
-//   SetUserAction(runAction);
+  auto runAction = new RunAction;
+  SetUserAction(runAction);
 }
 
 

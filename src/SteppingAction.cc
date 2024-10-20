@@ -75,9 +75,10 @@ void SteppingAction::UserSteppingAction(const G4Step* step) {
         G4double wavelength = (h_Planck * c_light) / photonEnergy;  // Wavelength in mm
 
         // Fill the histogram with the wavelength
-        G4AnalysisManager::Instance()->FillH1(0, wavelength / nm); // Fill histogram with the wavelength
+        auto analysisManager = G4AnalysisManager::Instance();
+        analysisManager->FillH1(0, wavelength / nm); // Fill histogram with the wavelength
 
-        G4cout << "Optiical photon wavelength: " << wavelength / nm << " nm" << G4endl;
+        G4cout << "Optical photon wavelength: " << wavelength / nm << " nm" << G4endl;
 
     }
 

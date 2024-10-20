@@ -9,6 +9,7 @@
 #include "G4UImanager.hh"
 
 #include "FTFP_BERT.hh"
+#include "FTFP_BERT_HP.hh"
 #include "G4EmStandardPhysics_option4.hh"
 // #include "G4StepLimiterPhysics.hh"
 #include "G4OpticalParameters.hh"
@@ -38,25 +39,22 @@ int main(int argc,char** argv)
   
 
   //  PHYSICS LISTS
-  // runManager->SetUserInitialization(new PhysicsList);
+  // runManager->SetUserInitialization(new PhysicsList());
 
   auto physicsList = new FTFP_BERT;
-  // // auto physicsList = new QGSP_BERT;
   physicsList->ReplacePhysics(new G4EmStandardPhysics_option4());
   auto opticalPhysics = new G4OpticalPhysics();
-  auto opticalParams  = G4OpticalParameters::Instance();
+  // auto opticalParams  = G4OpticalParameters::Instance();
+  // physicsList->RegisterPhysics(opticalPhysics);
+
+  // // Set scintillation process
+  // // opticalParams->SetWLSTimeProfile("delta");
+  // opticalParams->SetScintTrackSecondariesFirst(true); // controls whether the secondary particles (i.e., the scintillation photons) are tracked immediately after they are created. By enabling this option, Geant4 will prioritize tracking these photons before proceeding with the primary particle.
+  // // opticalParams->SetCerenkovMaxPhotonsPerStep(100);
+  // // opticalParams->SetCerenkovMaxBetaChange(10.0);
+  // opticalParams->SetCerenkovTrackSecondariesFirst(true);
+
   physicsList->RegisterPhysics(opticalPhysics);
-
-  // Set scintillation process
-  // opticalParams->SetWLSTimeProfile("delta");
-  opticalParams->SetScintTrackSecondariesFirst(true); // controls whether the secondary particles (i.e., the scintillation photons) are tracked immediately after they are created. By enabling this option, Geant4 will prioritize tracking these photons before proceeding with the primary particle.
-  // opticalParams->SetCerenkovMaxPhotonsPerStep(100);
-  // opticalParams->SetCerenkovMaxBetaChange(10.0);
-  opticalParams->SetCerenkovTrackSecondariesFirst(true);
-
-  physicsList->RegisterPhysics(opticalPhysics);
-  runManager->SetUserInitialization(physicsList);
-
   runManager->SetUserInitialization(physicsList);
     
 
