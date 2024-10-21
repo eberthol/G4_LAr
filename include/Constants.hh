@@ -12,9 +12,8 @@ constexpr G4double kzWorld = 5.* m;
 //--- argon sphere
 constexpr G4double kouterRadius = 50.*cm;      // Outer radius
 
-
 //--- particle gun
-constexpr G4double kEnergy       = 1.0 * MeV;
+constexpr G4double kEnergy       = 10.0 * MeV;
 // position
 constexpr G4double kGunPositionX = 0.0;
 constexpr G4double kGunPositionY = 0.0;

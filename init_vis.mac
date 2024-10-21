@@ -7,6 +7,11 @@
 /control/saveHistory
 # verbosity: 2 is VERY chatty
 /run/verbose 0 
+
+# comment this when checking models
+/process/had/verbose 0
+/process/em/verbose 0
+
 #
 # Change the default number of threads (in multi-threaded mode)
 #/run/numberOfThreads 4
