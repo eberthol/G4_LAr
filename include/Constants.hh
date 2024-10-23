@@ -18,6 +18,8 @@ constexpr G4double kEnergy       = 10.0 * MeV;
 constexpr G4double kGunPositionX = 0.0;
 constexpr G4double kGunPositionY = 0.0;
 constexpr G4double kGunPositionZ = -kzWorld/2 ;
+// G4double position = -0.5*(fDetector->GetSize());
+
 // direction
 constexpr G4double kDirectionX = 0.0;
 constexpr G4double kDirectionY = 0.0;

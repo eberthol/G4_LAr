@@ -4,7 +4,15 @@
 # /run/numberOfThreads 4
 /run/initialize
 
-#/run/beamOn 100
-/run/beamOn 10000
 
-#/run/beamOn 1
+# /process/inactivate phot
+# /process/inactivate conv
+# /process/inactivate GammaToMuPair
+
+#### create histograms
+/analysis/setFileName histos
+/analysis/h1/set 0  100 120 140 nm	# wavelength of optical photons 
+
+#/run/beamOn 100
+#/run/beamOn 10000
+/run/beamOn 10

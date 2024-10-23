@@ -6,7 +6,9 @@
 
 
 class G4Run;
+class DetectorConstruction;
 class EventAction;
+class HistoManager;
 
 /// Run action class
 
@@ -14,13 +16,13 @@ class RunAction : public G4UserRunAction
 {
   public:
     RunAction();
-    ~RunAction() override = default;
+    ~RunAction() override;
 
     void BeginOfRunAction(const G4Run*) override;
     void   EndOfRunAction(const G4Run*) override;
 
-  // private:
-    // EventAction* fEventAction = nullptr;
+  private:
+    HistoManager*           fHistoManager = nullptr;
  
 };
 

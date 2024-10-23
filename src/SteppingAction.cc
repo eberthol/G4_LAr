@@ -2,13 +2,14 @@
 #include "G4Step.hh"
 #include "G4Track.hh"
 #include "G4OpticalPhoton.hh"
+#include "G4Gamma.hh"
 #include "G4SystemOfUnits.hh"
 #include "G4VProcess.hh"
 #include "G4Neutron.hh"
 #include "G4PhysicalConstants.hh"  // For physical constants like h_Planck, c_light
 #include "G4AnalysisManager.hh"
 
-// Redirect cout to /dev/null, i.e. don't print out stuff in the terminal
+// //Redirect cout to /dev/null, i.e. don't print out stuff in the terminal
 // #include <iostream>
 // #include <fstream>
 // std::ofstream null_stream("/dev/null");
@@ -76,9 +77,45 @@ void SteppingAction::UserSteppingAction(const G4Step* step) {
 
         // Fill the histogram with the wavelength
         auto analysisManager = G4AnalysisManager::Instance();
-        analysisManager->FillH1(0, wavelength / nm); // Fill histogram with the wavelength
+        analysisManager->FillH1(0, wavelength); // Fill histogram with the wavelength (unit is set in the .mac file)
+        // analysisManager->FillH1(1, photonEnergy / eV);
+
+
+        // G4double Ephoton = track->GetTotalEnergy();  // in MeV
+        // G4double Pphoton = track->GetMomentum().mag();  // in MeV
+        // analysisManager->FillH1(2, Ephoton / eV);
+        // analysisManager->FillH1(3, Pphoton / eV);
+
+        // G4double vertexTime = track->GetGlobalTime();
+        // analysisManager->FillH1(4, vertexTime / ns);
 
         G4cout << "Optical photon wavelength: " << wavelength / nm << " nm" << G4endl;
+
+    }
+
+    // what to do with gammas
+    if (track->GetDefinition() == G4Gamma::Definition()) 
+    {
+        // Increment photon count in EventAction
+        fEventAction->AddScintillationPhoton();
+
+        // get the wavelength
+        G4double photonEnergy = track->GetKineticEnergy();  // in MeV
+        G4double wavelength = (h_Planck * c_light) / photonEnergy;  // Wavelength in mm
+
+        // // Fill the histogram with the wavelength
+        // auto analysisManager = G4AnalysisManager::Instance();
+        // analysisManager->FillH1(5, wavelength / nm); // Fill histogram with the wavelength
+        // analysisManager->FillH1(6, photonEnergy / MeV);
+
+
+        // G4double Ephoton = track->GetTotalEnergy();  // in MeV
+        // G4double Pphoton = track->GetMomentum().mag();  // in MeV
+        // analysisManager->FillH1(7, Ephoton / MeV);
+        // analysisManager->FillH1(8, Pphoton / MeV);
+
+        // G4double vertexTime = track->GetGlobalTime();
+        // analysisManager->FillH1(9, vertexTime / ns);
 
     }
 
@@ -109,7 +146,7 @@ void SteppingAction::UserSteppingAction(const G4Step* step) {
                 G4String processName = (process) ? process->GetProcessName() : "unknown";
 
                 // // Print the information
-                G4cout << "Secondary particle: " << particleName << G4endl;
+                G4cout << " Secondary particle: " << particleName << G4endl;
                 G4cout << "   Created by process: " << processName << G4endl;
                 G4cout << "   Vertex position: " << secondaryCreationPosition << G4endl;
                 G4cout << "   Energy: " << secondaryTrack->GetTotalEnergy() << G4endl;
