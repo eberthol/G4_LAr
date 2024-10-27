@@ -8,7 +8,7 @@
 # verbosity: 2 is VERY chatty
 /run/verbose 0 
 
-# comment this when checking models
+# to check models put 1
 /process/had/verbose 0
 /process/em/verbose 0
 

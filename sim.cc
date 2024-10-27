@@ -17,12 +17,15 @@
 // #include "G4Scintillation.hh"
 
 
+
 int main(int argc,char** argv)
 {
   // Detect interactive mode (if no arguments) and define UI session
   //
   G4UIExecutive* ui = nullptr;
   if ( argc == 1 ) { ui = new G4UIExecutive(argc, argv); }
+
+  G4Random::setTheSeed(220422); // reproductibility
 
   // Use G4SteppingVerboseWithUnits
   G4int precision = 4;
@@ -39,23 +42,23 @@ int main(int argc,char** argv)
   
 
   //  PHYSICS LISTS
-  // runManager->SetUserInitialization(new PhysicsList());
+  runManager->SetUserInitialization(new PhysicsList());
 
-  auto physicsList = new FTFP_BERT;
-  // physicsList->ReplacePhysics(new G4EmStandardPhysics_option4());
-  auto opticalPhysics = new G4OpticalPhysics();
-  // auto opticalParams  = G4OpticalParameters::Instance();
+  // auto physicsList = new FTFP_BERT;
+  // // physicsList->ReplacePhysics(new G4EmStandardPhysics_option4());
+  // auto opticalPhysics = new G4OpticalPhysics();
+  // // auto opticalParams  = G4OpticalParameters::Instance();
+  // // physicsList->RegisterPhysics(opticalPhysics);
+
+  // // // Set scintillation process
+  // // // opticalParams->SetWLSTimeProfile("delta");
+  // // opticalParams->SetScintTrackSecondariesFirst(true); // controls whether the secondary particles (i.e., the scintillation photons) are tracked immediately after they are created. By enabling this option, Geant4 will prioritize tracking these photons before proceeding with the primary particle.
+  // // // opticalParams->SetCerenkovMaxPhotonsPerStep(100);
+  // // // opticalParams->SetCerenkovMaxBetaChange(10.0);
+  // // opticalParams->SetCerenkovTrackSecondariesFirst(true);
+
   // physicsList->RegisterPhysics(opticalPhysics);
-
-  // // Set scintillation process
-  // // opticalParams->SetWLSTimeProfile("delta");
-  // opticalParams->SetScintTrackSecondariesFirst(true); // controls whether the secondary particles (i.e., the scintillation photons) are tracked immediately after they are created. By enabling this option, Geant4 will prioritize tracking these photons before proceeding with the primary particle.
-  // // opticalParams->SetCerenkovMaxPhotonsPerStep(100);
-  // // opticalParams->SetCerenkovMaxBetaChange(10.0);
-  // opticalParams->SetCerenkovTrackSecondariesFirst(true);
-
-  physicsList->RegisterPhysics(opticalPhysics);
-  runManager->SetUserInitialization(physicsList);
+  // runManager->SetUserInitialization(physicsList);
     
 
   // User action initialization
